@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #2C3E50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-form {
+            background-color: #FFFFFF;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .login-form h3 {
+            font-size: 26px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .social-login {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .social-login button {
+            background-color: #FFFFFF;
+            border: 2px solid #DDD;
+            border-radius: 8px;
+            padding: 10px;
+            width: 48%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .social-login button:hover {
+            background-color: #F0F0F0;
+            transform: translateY(-2px);
+        }
+        .social-login img {
+            width: 20px;
+            margin-right: 8px;
+        }
+        .separator {
+            margin: 20px 0;
+            color: #AAA;
+        }
+        .input-box {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .input-box input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #CCC;
+            font-size: 16px;
+        }
+        .password-container {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 16px;
+            color: #3498DB;
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 14px;
+            background-color: #3498DB;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        button[type="submit"]:hover {
+            background-color: #2980B9;
+            transform: translateY(-2px);
+        }
+        .sign-up {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #777;
+        }
+        .sign-up a {
+            color: #3498DB;
+            text-decoration: none;
+        }
+        .sign-up a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive design */
+        @media (max-width: 600px) {
+            .login-form {
+                width: 90%;
+                padding: 20px;
+            }
+            .social-login {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .social-login button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-form">
+        <h3>Log in with</h3>
+        <div class="social-login">
+            <button onclick="window.location.href='https://your-backend.com/auth/google'">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Google_Logo_2015.png" alt="Google"> Google
+            </button>
+            <button onclick="window.location.href='https://your-backend.com/auth/apple'">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple"> Apple
+            </button>
+        </div>
+        <p class="separator">or</p>
+        <form onsubmit="return validateForm()">
+            <div class="input-box">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter email address" required />
+            </div>
+            <div class="input-box">
+                <label for="password">Password</label>
+                <div class="password-container">
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required />
+                    <button type="button" class="toggle-password" onclick="togglePassword()" title="Show/Hide Password" aria-label="Show/Hide Password">👁</button>
+                </div>
+            </div>
+            <button type="submit">Log In</button>
+        </form>
+        <p class="sign-up">Don't have an account? <a href="signup.html">Sign up</a></p>
+    </div>
+
+    <script>
+        function togglePassword() {
+            var passwordField = document.getElementById("password");
+            passwordField.type = passwordField.type === "password" ? "text" : "password";
+        }
+
+        function validateForm() {
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+
+            if (!email.includes("@")) {
+                alert("Please enter a valid email address.");
+                return false;
+            }
+
+            if (password.length < 6) {
+                alert("Password must be at least 6 characters.");
+                return false;
+            }
+
+            // If validation is successful, redirect to the homepage
+            window.location.href = "homepage.html";
+
+            return false;
+        }
+    </script>
+</body>
+</html>

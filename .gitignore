@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+flask_env/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# VSCode
+.vscode/
+
+# Environment
+.env

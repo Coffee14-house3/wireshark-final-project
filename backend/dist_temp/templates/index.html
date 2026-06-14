@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+
+    <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+        <img id="profileImage" src="https://via.placeholder.com/150" 
+             alt="Profile" 
+             class="rounded-full w-24 h-24 mx-auto border-4 border-gray-300 cursor-pointer">
+        
+        <h2 class="mt-4 text-lg font-semibold">John Doe</h2>
+        <p class="text-sm text-gray-500">Wireshark Report Analyst</p>
+
+        <input type="file" id="imageUpload" accept="image/*" class="hidden">
+        <button class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600"
+                onclick="document.getElementById('imageUpload').click()">
+            Upload Image
+        </button>
+    </div>
+
+    <script>
+        document.getElementById('imageUpload').addEventListener('change', async function(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const formData = new FormData();
+            formData.append("image", file);
+
+            try {
+                const response = await fetch("http://localhost:5000/upload", {
+                    method: "POST",
+                    body: formData
+                });
+                const data = await response.json();
+                if (data.imageUrl) {
+                    console.log("Uploaded Image URL:", data.imageUrl);
+                    document.getElementById('profileImage').src = data.imageUrl;
+                } else {
+                    console.error("Upload failed:", data);
+                }
+            } catch (error) {
+                console.error("Error uploading image:", error);
+            }
+        });
+    </script>
+
+</body>
+</html>

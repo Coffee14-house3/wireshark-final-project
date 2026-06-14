@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #031f50;
+            animation: fadeIn 1.5s ease-out;
+            transition: background-color 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Signup Form */
+        .signup-form {
+            background: linear-gradient(135deg, #4caf50, #0f9b8e); /* Attractive gradient */
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); /* Deep shadow */
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            transform: translateY(-50px);
+            animation: slideUp 1s ease-out forwards;
+        }
+
+        @keyframes slideUp {
+            0% { transform: translateY(50px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .signup-form h3 {
+            font-size: 26px;
+            color: #fff;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            animation: fadeInText 1.5s ease-out;
+        }
+
+        @keyframes fadeInText {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .input-box {
+            margin-bottom: 20px;
+            text-align: left;
+            opacity: 0;
+            animation: fadeInInput 1s 0.5s forwards;
+        }
+
+        @keyframes fadeInInput {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .input-box input {
+            width: 100%;
+            padding: 14px;
+            border-radius: 8px;
+            border: 2px solid #ccc;
+            font-size: 16px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .input-box input:focus {
+            border-color: #4caf50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        }
+
+        .password-container {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 18px;
+            color: #4caf50;
+            transition: color 0.3s ease;
+        }
+
+        .toggle-password:hover {
+            color: #333;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 14px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease-in-out;
+            transform: perspective(500px) rotateX(0deg);
+            transition: all 0.3s ease-in-out;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+            transform: translateY(-3px) rotateX(10deg);
+        }
+
+        .login-link {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #ddd;
+        }
+
+        .login-link a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .login-link a:hover {
+            color: #4caf50;
+        }
+
+        /* Light/Dark Mode Toggle */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background-color: #45a049;
+        }
+
+        /* Animated SVG Blob */
+        .blob {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 500px;
+            height: 500px;
+            background: #4caf50;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: rotateBlob 15s linear infinite;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes rotateBlob {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Light/Dark Theme Toggle Button -->
+    <button class="theme-toggle" onclick="toggleTheme()">Switch to Dark</button>
+
+    <!-- Animated Blob -->
+    <div class="blob"></div>
+
+    <div class="signup-form">
+        <h3>Create an Account</h3>
+        <form id="signup-form">
+            <div class="input-box">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your full name" required />
+            </div>
+            <div class="input-box">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter email address" required />
+            </div>
+            <div class="input-box">
+                <label for="password">Password</label>
+                <div class="password-container">
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required />
+                    <button type="button" class="toggle-password" onclick="togglePassword()">👁</button>
+                </div>
+            </div>
+            <button type="submit">Sign Up</button>
+        </form>
+        <p class="login-link">Already have an account? <a href="login.html">Log in</a></p>
+    </div>
+
+    <script>
+        function togglePassword() {
+            var passwordField = document.getElementById("password");
+            passwordField.type = passwordField.type === "password" ? "text" : "password";
+        }
+
+        document.getElementById("signup-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            let userData = {
+                name: document.getElementById("name").value,
+                email: document.getElementById("email").value,
+                password: document.getElementById("password").value
+            };
+
+            fetch("http://127.0.0.1:5000/signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(userData)
+            })
+            .then(response => response.json())
+            .then(data => alert(data.message || data.error))
+            .catch(error => console.error("Error:", error));
+        });
+
+        function toggleTheme() {
+            const body = document.body;
+            const themeButton = document.querySelector('.theme-toggle');
+            if (body.style.backgroundColor === 'rgb(3, 31, 80)') {
+                body.style.backgroundColor = '#f0f0f0';
+                themeButton.textContent = 'Switch to Light';
+                themeButton.style.backgroundColor = '#333';
+            } else {
+                body.style.backgroundColor = '#031f50';
+                themeButton.textContent = 'Switch to Dark';
+                themeButton.style.backgroundColor = '#4caf50';
+            }
+        }
+    </script>
+</body>
+</html>

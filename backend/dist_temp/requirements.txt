@@ -1,0 +1,9 @@
+Flask
+Flask-SocketIO
+Flask-CORS
+scapy
+matplotlib
+bcrypt
+fpdf
+werkzeug
+eventlet

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Animated 3D Login Page</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      height: 100vh;
+      background: linear-gradient(-45deg, #1f1c2c, #928DAB, #1f1c2c);
+      background-size: 400% 400%;
+      animation: gradientMove 20s ease infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+      transition: background 0.5s;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* SVG Animated Shapes */
+    svg {
+      position: absolute;
+      z-index: 0;
+    }
+
+    .shape1 {
+      top: -50px;
+      left: -50px;
+      width: 300px;
+      height: 300px;
+      opacity: 0.1;
+      animation: rotateShape 60s linear infinite;
+    }
+
+    .shape2 {
+      bottom: -80px;
+      right: -80px;
+      width: 250px;
+      height: 250px;
+      opacity: 0.08;
+      animation: rotateShape 90s linear reverse infinite;
+    }
+
+    @keyframes rotateShape {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Login Form 3D Pop */
+    .login-form {
+      width: 100%;
+      max-width: 420px;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+      z-index: 2;
+      transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+      animation: slideIn 1.2s ease forwards;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: perspective(1000px) translateY(80px) rotateX(15deg);
+      }
+      to {
+        opacity: 1;
+        transform: perspective(1000px) rotateX(0deg);
+      }
+    }
+
+    .login-form h3 {
+      text-align: center;
+      color: #2C3E50;
+      font-size: 28px;
+      margin-bottom: 25px;
+      font-weight: 600;
+    }
+
+    .input-box {
+      margin-bottom: 20px;
+    }
+
+    .input-box label {
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .input-box input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      transition: 0.3s ease;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .input-box input:focus {
+      border-color: #3498db;
+      outline: none;
+      box-shadow: 0 0 10px rgba(52, 152, 219, 0.4);
+    }
+
+    .password-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      color: #2980B9;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(to right, #3498db, #2c3e50);
+      border: none;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .sign-up {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .sign-up a {
+      color: #2980B9;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .sign-up a:hover {
+      text-decoration: underline;
+    }
+
+    .dark-mode {
+      background: #121212 !important;
+    }
+
+    .toggle-theme {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      background: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      z-index: 5;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+    }
+
+    .toggle-theme:hover {
+      background: #eee;
+    }
+
+    @media (max-width: 600px) {
+      .login-form {
+        padding: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Theme Toggle Button -->
+  <button class="toggle-theme" onclick="toggleTheme()">🌓 Theme</button>
+
+  <!-- SVG Animated Shapes -->
+  <svg class="shape1" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <path fill="#ffffff" d="M42.3,-65.6C55.4,-58.5,66.1,-46,70.7,-31.9C75.3,-17.8,73.8,-2.1,70.1,13.8C66.4,29.7,60.6,45.9,48.5,53.9C36.4,61.9,18.2,61.6,0.6,60.8C-17.1,60,-34.2,58.7,-45.4,50C-56.6,41.2,-61.8,25.1,-64.4,8.2C-67.1,-8.6,-67.2,-25.9,-59.7,-37.8C-52.1,-49.7,-37,-56.3,-22.1,-62.8C-7.2,-69.4,7.5,-75.9,22.5,-73.7C37.5,-71.6,53,-60.4,42.3,-65.6Z" transform="translate(100 100)" />
+  </svg>
+
+  <svg class="shape2" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <path fill="#ffffff" d="M47.6,-63.1C61.7,-56.4,72.3,-41.1,70.3,-27.3C68.3,-13.4,53.7,-1,48.2,14.6C42.7,30.3,46.3,49.1,38.1,58.2C29.9,67.3,9.9,66.8,-5.4,63C-20.7,59.1,-31.2,51.8,-39.2,42.2C-47.1,32.6,-52.5,20.8,-56.1,7.2C-59.7,-6.4,-61.5,-22,-54.7,-31.7C-48,-41.4,-32.6,-45.3,-18.3,-51.5C-4.1,-57.7,9.1,-66.1,23.2,-68.4C37.3,-70.7,52.4,-66.7,47.6,-63.1Z" transform="translate(100 100)" />
+  </svg>
+
+  <!-- Login Form -->
+  <div class="login-form">
+    <h3>Welcome Back</h3>
+    <form onsubmit="return validateForm()">
+      <div class="input-box">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required />
+      </div>
+      <div class="input-box">
+        <label for="password">Password</label>
+        <div class="password-container">
+          <input type="password" id="password" name="password" placeholder="Enter your password" required />
+          <button type="button" class="toggle-password" onclick="togglePassword()" aria-label="Toggle Password">👁</button>
+        </div>
+      </div>
+      <button type="submit">Log In</button>
+    </form>
+    <p class="sign-up">Don't have an account? <a href="{{ url_for('signup') }}">Sign up</a></p>
+  </div>
+
+  <script>
+    function togglePassword() {
+      const pwd = document.getElementById('password');
+      pwd.type = pwd.type === 'password' ? 'text' : 'password';
+    }
+
+    function validateForm() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      if (!email.includes("@")) {
+        alert("Please enter a valid email address.");
+        return false;
+      }
+
+      if (password.length < 6) {
+        alert("Password must be at least 6 characters.");
+        return false;
+      }
+
+      window.location.href = "{{ url_for('homepage') }}";
+      return false;
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle("dark-mode");
+    }
+  </script>
+</body>
+</html>
