@@ -1,0 +1,26 @@
+name: wireshark-analyzer
+description: Network Packet Analyzer with Flask backend and WebSocket support
+version: 1.0.0
+
+# Build configuration
+build:
+  runtime: python3.10
+  entrypoint: python app.py
+  cwd: backend/
+  
+# Environment variables
+env:
+  FLASK_ENV: production
+  FLASK_DEBUG: 0
+  SECRET_KEY: wireshark-secret-2024
+
+# Port configuration
+port: 5000
+
+# Health check
+healthCheck:
+  path: /
+  interval: 30
+  timeout: 5
+  healthyThreshold: 2
+  unhealthyThreshold: 3

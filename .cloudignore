@@ -1,0 +1,68 @@
+# Ignore files and directories that shouldn't be uploaded to Tencent Cloud
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+.DS_Store
+
+# Project specific
+uploads/
+reports/
+backend/reports/
+backend/uploads/
+backend/__pycache__/
+backend/dist_temp/
+.env
+.env.local
+users.json
+*.pcap
+*.pcapng
+
+# Temporary files
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# Docker
+docker-compose.yml
+Dockerfile.dev
+.dockerignore
