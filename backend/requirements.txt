@@ -6,6 +6,5 @@ matplotlib
 bcrypt
 fpdf
 werkzeug
-eventlet
 gunicorn
 reportlab
