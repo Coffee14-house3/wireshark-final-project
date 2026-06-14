@@ -107,8 +107,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         // Debug Socket.IO connection
-        // Connect to Socket.IO server with explicit URL
-        const socket = io('http://127.0.0.1:5000', {
+        // Connect to Socket.IO server dynamically based on current host
+        const socket = io({
             transports: ['websocket', 'polling'],
             reconnectionAttempts: 5,
             reconnectionDelay: 1000
@@ -206,8 +206,8 @@
                 exportBtn.textContent = 'Exporting...';
                 exportBtn.disabled = true;
                 
-                // Use absolute URL with correct host
-                const response = await fetch('http://127.0.0.1:5000/server_api/export-pdf');
+                // Use relative URL for cloud deployment
+                const response = await fetch('/server_api/export-pdf');
                 
                 if (!response.ok) {
                     if (response.headers.get('content-type')?.includes('application/json')) {
