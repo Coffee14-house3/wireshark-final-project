@@ -292,8 +292,14 @@ def process_packet(packet):
     })
 
 def capture_packets():
-    # Start sniffing using Scapy (does not require Wireshark)
-    sniff(prn=process_packet, store=False, stop_filter=lambda p: not capturing)
+    global capturing
+    try:
+        # Start sniffing using Scapy (does not require Wireshark)
+        sniff(prn=process_packet, store=False, stop_filter=lambda p: not capturing)
+    except Exception as e:
+        print(f"Packet capture error: {str(e)}")
+        capturing = False
+        socketio.emit('capture_error', {'message': str(e)})
 
 
 @socketio.on('start_capture')
@@ -317,7 +323,10 @@ def handle_start_capture():
         
         # Start packet capture in a separate thread
         capture_thread = threading.Thread(target=capture_packets)
+        capture_thread.daemon = True
         capture_thread.start()
+        
+        socketio.emit('capture_started', {'status': 'success'})
 
 @socketio.on('stop_capture')
 def handle_stop_capture():
@@ -330,6 +339,7 @@ def handle_stop_capture():
     'connections': len(connections),
     'packet_sizes': packet_sizes
 })
+    socketio.emit('capture_stopped', {'status': 'success'})
 
 
 # if _name_ == '_main_':
