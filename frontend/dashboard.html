@@ -108,7 +108,7 @@
     <script>
         // Debug Socket.IO connection
         // Connect to Socket.IO server dynamically based on current host
-        const socket = io({
+        const socket = io(window.location.origin, {
             transports: ['websocket', 'polling'],
             reconnectionAttempts: 5,
             reconnectionDelay: 1000

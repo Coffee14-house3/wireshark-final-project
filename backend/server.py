@@ -236,60 +236,65 @@ def process_packet(packet):
     if not capturing:
         return
 
-    # Update statistics
-    total_packets += 1
-    packet_count += 1
-    length = len(packet)
-    bandwidth += length
-    
-    highest_layer = packet.lastlayer().name
-    protocols[highest_layer] += 1
+    try:
+        # Update statistics
+        total_packets += 1
+        packet_count += 1
+        length = len(packet)
+        bandwidth += length
+        
+        # Safely get highest layer (prevents silent crashes on malformed packets)
+        last_layer = packet.lastlayer()
+        highest_layer = getattr(last_layer, 'name', 'Unknown')
+        protocols[highest_layer] += 1
 
-    # Handle ports
-    if TCP in packet:
-        port = packet[TCP].dport
-    elif UDP in packet:
-        port = packet[UDP].dport
-    else:
-        port = 'N/A'
-    ports[port] += 1
+        # Handle ports
+        if TCP in packet:
+            port = packet[TCP].dport
+        elif UDP in packet:
+            port = packet[UDP].dport
+        else:
+            port = 'N/A'
+        ports[port] += 1
 
-    # Handle IP connections
-    if IP in packet:
-        src = packet[IP].src
-        dst = packet[IP].dst
-        connections[f"{src}->{dst}"].add(port)
+        # Handle IP connections
+        if IP in packet:
+            src = packet[IP].src
+            dst = packet[IP].dst
+            connections[f"{src}->{dst}"].add(port)
 
-    # Packet sizes
-    packet_sizes.append(length)
+        # Packet sizes
+        packet_sizes.append(length)
 
-    # Calculate metrics for attack detection
-    elapsed = time.time() - start_time
-    pps = packet_count / elapsed if elapsed > 0 else 0
-    current_bandwidth = bandwidth / elapsed if elapsed > 0 else 0
+        # Calculate metrics for attack detection
+        elapsed = time.time() - start_time
+        pps = packet_count / elapsed if elapsed > 0 else 0
+        current_bandwidth = bandwidth / elapsed if elapsed > 0 else 0
 
-    # Check for attacks
-    alerts = []
-    alerts.extend(check_dos_attacks(pps, current_bandwidth, packet))
-    alerts.extend(check_brute_force(packet))
+        # Check for attacks
+        alerts = []
+        alerts.extend(check_dos_attacks(pps, current_bandwidth, packet))
+        alerts.extend(check_brute_force(packet))
 
-    # Send alerts if detected
-    if alerts:
-        socketio.emit('dos_alert', {
-            'alerts': alerts,
-            'timestamp': time.strftime('%Y-%m-%d %H:%M:%S')
+        # Send alerts if detected
+        if alerts:
+            socketio.emit('dos_alert', {
+                'alerts': alerts,
+                'timestamp': time.strftime('%Y-%m-%d %H:%M:%S')
+            })
+
+        # Real-time updates
+        socketio.emit('update_stats', {
+            'total_packets': total_packets,
+            'pps': f"{pps:.1f}",
+            'bandwidth': f"{bandwidth / 1024:.1f} KB/s",
+            'connections': len(connections),
+            'protocols': dict(protocols),
+            'ports': dict(ports),
+            'packet_sizes': packet_sizes
         })
-
-    # Real-time updates
-    socketio.emit('update_stats', {
-        'total_packets': total_packets,
-        'pps': f"{pps:.1f}",
-        'bandwidth': f"{bandwidth / 1024:.1f} KB/s",
-        'connections': len(connections),
-        'protocols': dict(protocols),
-        'ports': dict(ports),
-        'packet_sizes': packet_sizes
-    })
+    except Exception as e:
+        print(f"Error processing packet: {e}")
 
 def capture_packets():
     global capturing
