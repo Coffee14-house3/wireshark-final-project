@@ -7,4 +7,3 @@ bcrypt
 fpdf
 werkzeug
 eventlet
-gunicorn
